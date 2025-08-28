@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { Card, CardContent } from "@/components/ui/card";
+import { TrendingUp, ShoppingBag, Store, BarChart3 } from "lucide-react";
 
 export default function ShortReportPage() {
   const [report, setReport] = useState<
@@ -135,6 +137,60 @@ export default function ShortReportPage() {
       {loading && <p className="text-gray-500 dark:text-gray-400">Loading report...</p>}
       {error && <p className="text-red-600 dark:text-red-400">{error}</p>}
 
+      {/* Summary Cards */}
+      {totals && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="rounded-2xl shadow-md bg-gray-50 dark:bg-gray-900">
+            <CardContent className="p-4 flex flex-col items-start">
+              <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                <TrendingUp size={20} />
+                <span className="text-sm font-medium">Total Sales</span>
+              </div>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+                {Number(totals.total_sales).toLocaleString()} TZS
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-2xl shadow-md bg-gray-50 dark:bg-gray-900">
+            <CardContent className="p-4 flex flex-col items-start">
+              <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+                <ShoppingBag size={20} />
+                <span className="text-sm font-medium">Retail Sales</span>
+              </div>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+                {Number(totals.retail_sales).toLocaleString()} TZS
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-2xl shadow-md bg-gray-50 dark:bg-gray-900">
+            <CardContent className="p-4 flex flex-col items-start">
+              <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400">
+                <Store size={20} />
+                <span className="text-sm font-medium">Wholesale Sales</span>
+              </div>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+                {Number(totals.wholesale_sales).toLocaleString()} TZS
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-2xl shadow-md bg-gray-50 dark:bg-gray-900">
+            <CardContent className="p-4 flex flex-col items-start">
+              <div className="flex items-center gap-2 text-orange-600 dark:text-orange-400">
+                <BarChart3 size={20} />
+                <span className="text-sm font-medium">Sales Count</span>
+              </div>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+                {totals.sales_count}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Report Table */}
       <div ref={printRef}>
         <table className="min-w-full border-collapse border border-gray-300 dark:border-gray-700 mt-4 text-gray-900 dark:text-white">
           <thead className="bg-gray-100 dark:bg-gray-800">
